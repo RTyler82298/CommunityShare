@@ -1,0 +1,8 @@
+CREATE TABLE Users
+(UserName VarChar(30) Primary Key,
+Email varChar(25),
+Phone varchar(10),
+PassWord varchar(25),
+PrimaryContact varchar(20) not null Check(PrimaryContact In('Phone', 'Email', 'Do not Contact')),
+Member varchar(256)
+);
