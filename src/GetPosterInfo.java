@@ -6,6 +6,39 @@ import java.sql.ResultSet;
 
 public class GetPosterInfo {
 
+    public static String getPosterUsername (String postID) {
+        String connectionUrl = //TODO Consolidate connection creation into single private method?
+                "jdbc:sqlserver:"
+                        + "database=;"
+                        + "user=;"
+                        + "password=;"
+                        + "encrypt=false;"
+                        + "trustServerCertificate=false;"
+                        + "loginTimeout=30;";
+        ResultSet resultSet = null;
+        String query ="SELECT * FROM Posts WHERE ItemsID = ?;";
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+             PreparedStatement prepedQuery =connection.prepareStatement(query)){
+            prepedQuery.setString(1,postID);
+            prepedQuery.execute();
+            resultSet = prepedQuery.getResultSet();
+            return resultSet.getString("UserName");
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+
+
+
+    }
+
+
+
+
     public static String getPosterEmail (String username) {
         String connectionUrl = // TODO create local database to test properly
                 "jdbc:sqlserver:"
