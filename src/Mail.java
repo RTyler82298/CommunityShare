@@ -1,19 +1,12 @@
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
 
 
 public class Mail {
 
 
-        public static void sendMail(String [] args) {
-            // Recipient's email ID needs to be mentioned.
-            String to = "abcd@gmail.com";
-
-            // Sender's email ID needs to be mentioned
-            String from = "web@gmail.com";
-
+        public static void sendMail(String recipientemail, String postName, String selectorName, String selectorEmail, String posterName) {
             // Assuming you are sending email from localhost
             String host = "localhost";
 
@@ -31,16 +24,17 @@ public class Mail {
                 MimeMessage message = new MimeMessage(session);
 
                 // Set From: header field of the header.
-                message.setFrom(new InternetAddress(from));
+                message.setFrom(new InternetAddress("CommuntiyAPP@Gmail.com"));  //TODO Create this email
 
                 // Set To: header field of the header.
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientemail));
 
                 // Set Subject: header field
-                message.setSubject("This is the Subject Line!");
+                message.setSubject("Someone Has Selected one of your Posts!");
 
                 // Now set the actual message
-                message.setText("This is actual message");
+                message.setText("Hello" + posterName + ". " + selectorName + " has asked for your post " + posterName
+                + ". Please reach out to them at " + selectorEmail + " at your convience to arrange.");
 
                 // Send message
                 Transport.send(message);
