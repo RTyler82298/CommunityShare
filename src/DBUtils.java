@@ -6,13 +6,13 @@ public class DBUtils {
 
 
     private static String setupDBConnection () {
-        return "jdbc:sqlserver:DESKTOP-2TSRUTK\\SQLEXPRESS;"
+        return "jdbc:sqlserver://DESKTOP-2TSRUTK\\sqlexpress;"
                 + "database=RideShareTest;"
-                + "user=DESKTOP-2TSRUTK\\rdsty;"
-                + "password=;"
+                + "user=admin;"
+                + "password=admin;"
                 + "encrypt=false;"
                 + "trustServerCertificate=false;"
-                + "loginTimeout=30;";
+                + "loginTimeout=10;";
     }
 
 
