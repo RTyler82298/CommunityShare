@@ -1,6 +1,3 @@
-import java.sql.*;
-import java.util.Locale;
-
 public class NotifyPoster {
 
     public static void main(String[] args) {
