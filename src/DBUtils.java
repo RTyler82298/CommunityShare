@@ -9,7 +9,7 @@ public class DBUtils {
         return "jdbc:sqlserver://DESKTOP-2TSRUTK\\sqlexpress;"
                 + "database=RideShareTest;"
                 + "user=admin;"
-                + "password=admin;"
+                + "password=test;"
                 + "encrypt=false;"
                 + "trustServerCertificate=false;"
                 + "loginTimeout=10;";
@@ -35,7 +35,7 @@ public class DBUtils {
 
     public static String getPosterUsername (String postID) {
         ResultSet resultSet = null;
-        String query ="SELECT * FROM Posts WHERE ItemsID = ?;";
+        String query ="SELECT * FROM Items WHERE ItemsID = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
              PreparedStatement prepedQuery =connection.prepareStatement(query)){
             prepedQuery.setString(1,postID);
@@ -60,12 +60,13 @@ public class DBUtils {
 
     public static String getPosterEmail (String username) {
         ResultSet resultSet = null;
-        String query ="SELECT * FROM Users WHERE UserName = ?;";
+        String query ="SELECT * FROM Users WHERE UserID = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
              PreparedStatement prepedQuery =connection.prepareStatement(query)){
             prepedQuery.setString(1,username);
             prepedQuery.execute();
             resultSet = prepedQuery.getResultSet();
+            resultSet.next();
             return resultSet.getString("Email");
 
         }
