@@ -16,31 +16,39 @@ public class DBUtils {
     }
 
 
-    public static ResultSet getPosts ( String searchWord) {
+    public static String getPosts ( String searchWord) {
 
         ResultSet resultSet = null;
-        String query = "SELECT * FROM Posts WHERE Description = ?;";
+        String search = "PostID \t Condition \t Poster \n";
+        String query = "SELECT * FROM Items WHERE Description = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
-             PreparedStatement prepedQuery =connection.prepareStatement(query)){
+             PreparedStatement prepedQuery = connection.prepareStatement(query)){
             prepedQuery.setString(1,searchWord);
             prepedQuery.execute();
             resultSet = prepedQuery.getResultSet();
+
+            while (resultSet.next()) {
+                search += "\t" + resultSet.getInt("itemID") + "\t" + resultSet.getString("Condition") + "\t" + resultSet.getString("UserName") + "\n";
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return resultSet;
+
+
+        return search;
     }
 
 
 
-    public static String getPosterUsername (String postID) {
+    public static String getPosterUsername (int postID) {
         ResultSet resultSet = null;
-        String query ="SELECT * FROM Items WHERE ItemsID = ?;";
+        String query ="SELECT * FROM Items WHERE itemID = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
-             PreparedStatement prepedQuery =connection.prepareStatement(query)){
-            prepedQuery.setString(1,postID);
+             PreparedStatement prepedQuery = connection.prepareStatement(query)){
+            prepedQuery.setInt(1,postID);
             prepedQuery.execute();
             resultSet = prepedQuery.getResultSet();
+            resultSet.next();
             return resultSet.getString("UserName");
 
         }
