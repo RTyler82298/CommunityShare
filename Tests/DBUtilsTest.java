@@ -6,6 +6,8 @@ class DBUtilsTest {
 
     @Test
     void getPosterUsername() {
+        assertEquals("Rdstyler82298", DBUtils.getPosterUsername(11));
+        assertEquals("Rdstyler",DBUtils.getPosterUsername(2));
     }
 
     @Test

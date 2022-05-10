@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DBUtils {
 
@@ -16,11 +18,33 @@ public class DBUtils {
     }
 
 
-    public static String getPosts ( String searchWord) {
+    public static Map<String,String> getItemPosts (String searchWord) {
+        ResultSet resultSet = null;
+        Map<String,String> search = new HashMap<>();
+        String query = "SELECT * FROM Items WHERE Description = ?;";
+        try (Connection connection = DriverManager.getConnection(setupDBConnection());
+             PreparedStatement prepedQuery = connection.prepareStatement(query)){
+            prepedQuery.setString(1,searchWord);
+            prepedQuery.execute();
+            resultSet = prepedQuery.getResultSet();
 
+            while (resultSet.next()) {
+                search.put(resultSet.getString("UserName"), resultSet.getString("Condition") + resultSet.getString("ItemID"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return search;
+    }
+
+
+
+    public static String getRidePosts ( String searchWord) {
         ResultSet resultSet = null;
         String search = "PostID \t Condition \t Poster \n";
-        String query = "SELECT * FROM Items WHERE Description = ?;";
+        String query = "SELECT * FROM Rides WHERE Destination = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
              PreparedStatement prepedQuery = connection.prepareStatement(query)){
             prepedQuery.setString(1,searchWord);
@@ -37,7 +61,6 @@ public class DBUtils {
 
         return search;
     }
-
 
 
     public static String getPosterUsername (int postID) {
