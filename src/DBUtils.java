@@ -7,6 +7,7 @@ public class DBUtils {
 
 
 
+
     private static String setupDBConnection () {
         return "jdbc:sqlserver://DESKTOP-2TSRUTK\\sqlexpress;"
                 + "database=RideShareTest;"
@@ -40,6 +41,50 @@ public class DBUtils {
     }
 
 
+
+
+
+    static String loginUser(String Username, String Password) {
+        ResultSet resultSet = null;
+        String query = "Select * from Users Where UserName = ? and Password = ?";
+        try(Connection connection = DriverManager.getConnection(setupDBConnection());
+        PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1,Username);
+            preparedStatement.setString(2, Password);
+
+            preparedStatement.execute();
+            resultSet = preparedStatement.getResultSet();
+
+            resultSet.last();
+            if (resultSet.getRow() != 1) {
+                return "Error logging in";
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "Success";
+    }
+
+
+    static String createUser(String Username, String Password, String Email)  {
+        ResultSet resultSet = null;
+        String query = "Insert INTO Users (UserID, Password, Email) Values ( ?, ?, ?)";
+        try (Connection connection = DriverManager.getConnection(setupDBConnection());
+        PreparedStatement prepquery = connection.prepareStatement(query)){
+            prepquery.setString(1, Username);
+            prepquery.setString(2, Password);
+            prepquery.setString(3, Email);
+            prepquery.execute();
+            resultSet = prepquery.getResultSet();
+            return resultSet.next() ? "Added User" : "Username Taken";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static String getRidePosts ( String searchWord) {
         ResultSet resultSet = null;
