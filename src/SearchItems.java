@@ -10,7 +10,9 @@ public class SearchItems extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String item = request.getParameter("item");
-        Map<String, String> results = DBUtils.getItemPosts(item);
+        String search = DBUtils.getItemPosts(item);
+        PrintWriter out = response.getWriter();
+        out.println(search);
 
 
     }

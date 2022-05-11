@@ -19,9 +19,9 @@ public class DBUtils {
     }
 
 
-    public static Map<String,String> getItemPosts (String searchWord) {
+    public static String getItemPosts (String searchWord) {
         ResultSet resultSet = null;
-        Map<String,String> search = new HashMap<>();
+        String search = "";
         String query = "SELECT * FROM Items WHERE Description = ?;";
         try (Connection connection = DriverManager.getConnection(setupDBConnection());
              PreparedStatement prepedQuery = connection.prepareStatement(query)){
@@ -30,7 +30,8 @@ public class DBUtils {
             resultSet = prepedQuery.getResultSet();
 
             while (resultSet.next()) {
-                search.put(resultSet.getString("UserName"), resultSet.getString("Condition") + resultSet.getString("ItemID"));
+                search += "Post Number: \t" + resultSet.getString("ItemID") + "\t Poster: \t" + resultSet.getString("Username")
+                 + "Condition: \t" + resultSet.getString("Condition") + "\n";
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
