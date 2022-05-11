@@ -9,10 +9,10 @@ import java.util.Map;
 public class DBUtils {
 
     public static String setupDBConnection () {
-        return "jdbc:sqlserver://database-1.cbjmpwcdjfmq.us-east-1.rds.amazonaws.com;"
+        return "jdbc:sqlserver://;"
                 + "database=DovidDuskis;"
                 + "user=admin;"
-                + "password=mcon364ab;"
+                + "password=*********;"
                 + "encrypt=false;"
                 + "trustServerCertificate=false;"
                 + "loginTimeout=30;";
