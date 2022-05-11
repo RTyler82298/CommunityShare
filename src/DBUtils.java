@@ -47,7 +47,7 @@ public class DBUtils {
 
     static String loginUser(String Username, String Password) {
         ResultSet resultSet = null;
-        String query = "Select * from Users Where UserName = ? and Password = ?";
+        String query = "Select * from Users Where UserID = ? and Password = ?";
         try(Connection connection = DriverManager.getConnection(setupDBConnection());
         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1,Username);
@@ -55,14 +55,15 @@ public class DBUtils {
 
             preparedStatement.execute();
             resultSet = preparedStatement.getResultSet();
+            resultSet.next();
 
-            resultSet.last();
             if (resultSet.getRow() != 1) {
-                return "Error logging in";
+                return "Error";
             }
         }
         catch (Exception e){
             e.printStackTrace();
+            return "Error";
         }
         return "Success";
     }
@@ -78,13 +79,14 @@ public class DBUtils {
             prepquery.setString(3, Email);
             prepquery.execute();
             resultSet = prepquery.getResultSet();
-            return resultSet.next() ? "Added User" : "Username Taken";
+            return "Added User";
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
 
-        return null;
+            //TODO make sure this only returns if the Violation of Primary Key Error is thrown
+            return "Username Taken";
+        }
     }
 
     public static String getRidePosts ( String searchWord) {
