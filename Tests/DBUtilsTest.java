@@ -37,11 +37,13 @@ class DBUtilsTest {
     void createUser() {
         String realuser = "Rdstyler82298";
         String realpass = "MyPassword123";
-        String newUser = "Mcohen";
-        String newPass = "MCON364";
-        String newEmail = "Mchohen@touro.edu";
+        String newUser = "DDuskis";
+        String newPass = "Testpass";
+        String newEmail = "DDuskis@touro.edu";
 
         assertEquals("Username Taken", DBUtils.createUser(realuser,realpass,newEmail));
+        assertEquals("Added User", DBUtils.createUser(newUser,newPass,newEmail));
+        assertEquals("Success", DBUtils.loginUser(newUser,newPass));
 
 
 

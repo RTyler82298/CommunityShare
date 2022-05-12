@@ -1,6 +1,4 @@
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DBUtils {
 
@@ -82,7 +80,7 @@ public class DBUtils {
             return "Added User";
         }
         catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
 
             //TODO make sure this only returns if the Violation of Primary Key Error is thrown
             return "Username Taken";
